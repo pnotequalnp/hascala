@@ -23,6 +23,8 @@ library
   exposed-modules:
     Scala.Foldable
     Scala.Monoid
+    Scala.Semigroup
+    Scala.Semiring
 
 executable hascala
   import:        base

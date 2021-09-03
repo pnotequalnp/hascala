@@ -2,10 +2,11 @@ module Scala.Foldable where
 
 import Data.Kind (Type)
 import Scala.Monoid
-import Prelude hiding (Foldable (..), Monoid (..), Semigroup (..), product, sum, (*), (+))
+import Scala.Semiring
+import Prelude hiding (Foldable (..), Monoid (..), Semigroup (..), length, product, sum, (*), (+))
 
 newtype Foldable (t :: Type -> Type) = Foldable
-  { foldMap' :: forall a b. (?monoid :: Monoid b) => (a -> b) -> t a -> b
+  { _foldMap :: forall a b. (?monoid :: Monoid b) => (a -> b) -> t a -> b
   }
 
 foldMap ::
@@ -16,7 +17,7 @@ foldMap ::
   (a -> b) ->
   t a ->
   b
-foldMap = foldMap' ?foldable
+foldMap = _foldMap ?foldable
 
 fold ::
   forall a (t :: Type -> Type).
@@ -52,7 +53,7 @@ product = fold
 length :: forall a (t :: Type -> Type). (?foldable :: Foldable t) => t a -> Int
 length = foldMap $ const 1
   where
-    ?monoid = additionMonoid
+    ?monoid = intMonoidAddition
 
 listFoldable :: Foldable []
 listFoldable = Foldable go
@@ -64,3 +65,6 @@ listFoldable = Foldable go
 
 maybeFoldable :: Foldable Maybe
 maybeFoldable = Foldable $ maybe mempty
+
+eitherFoldable :: Foldable (Either e)
+eitherFoldable = Foldable $ either (const mempty)

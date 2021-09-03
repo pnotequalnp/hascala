@@ -35,12 +35,12 @@ mconcat = \case
   x:xs -> x <> mconcat xs
 
 foo :: Int
-foo = length (fold nestedList) <> fold listOfInts
+foo = length (mconcat nestedList) <> mconcat listOfInts
   where
     ?monoid = intMonoid
     ?monoid = listMonoid
     ?foldable = listFoldable
 ```
-This is valid syntactically, but fails to appropriately dispatch the correct `?monoid` to each `fold`
-based on its type. It's a cool idea and fun to learn about, but not useful for actual programming as
-far as I know.
+This is valid syntactically, but fails to appropriately dispatch the correct `?monoid` to each
+`mconcat` based on its type. It's a cool idea and fun to learn about, but not useful for actual
+programming as far as I know.

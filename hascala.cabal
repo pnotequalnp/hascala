@@ -1,0 +1,30 @@
+cabal-version: 2.4
+name:          hascala
+version:       0.1.0.0
+license:       ISC
+license-file:  LICENSE
+author:        Kevin Mullins
+maintainer:    kevin@pnotequalnp.com
+
+common base
+  build-depends:      base ^>=4.14.1.0
+  default-language:   Haskell2010
+  default-extensions:
+    BlockArguments
+    ImplicitParams
+    ImportQualifiedPost
+    KindSignatures
+    LambdaCase
+    RankNTypes
+
+library
+  import:          base
+  hs-source-dirs:  src
+  exposed-modules:
+    Scala.Foldable
+    Scala.Monoid
+
+executable hascala
+  import:        base
+  main-is:       Main.hs
+  build-depends: hascala
